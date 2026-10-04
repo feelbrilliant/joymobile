@@ -1,0 +1,73 @@
+{
+  "count": 11,
+  "generatedDirectory": "C:/Users/user/.codex/generated_images/01a01eb3-bf29-7b21-8748-21a00c03fe24",
+  "images": [
+    {
+      "id": "00",
+      "title": "썸네일",
+      "file": "exec-38932828-10d9-4f35-98ff-e70b7d26ff5d.png",
+      "output": "00-thumbnail.png"
+    },
+    {
+      "id": "01",
+      "title": "자급제폰이란 무엇일까요",
+      "file": "exec-2b9c87e9-95bf-42fd-8ad3-43a0076b8825.png",
+      "output": "01-definition.png"
+    },
+    {
+      "id": "02",
+      "title": "자급제폰 개통방법",
+      "file": "exec-61c4e46b-429f-4fa3-a6e4-c84ad5bcd89d.png",
+      "output": "02-three-routes.png"
+    },
+    {
+      "id": "03",
+      "title": "기존 유심 그대로 사용하는 방법",
+      "file": "exec-969a0797-3e49-415d-944d-ce35822107e5.png",
+      "output": "03-existing-sim.png"
+    },
+    {
+      "id": "04",
+      "title": "알뜰폰으로 개통하는 방법",
+      "file": "exec-c8f87285-a699-498e-af8c-c7e9d7863019.png",
+      "output": "04-mvno.png"
+    },
+    {
+      "id": "05",
+      "title": "선불폰으로 개통하는 방법",
+      "file": "exec-d0fcf1f7-a905-4418-b091-1a9fa191fa66.png",
+      "output": "05-prepaid.png"
+    },
+    {
+      "id": "06",
+      "title": "알뜰폰 VS 선불폰 차이",
+      "file": "exec-01205fb7-2d22-4c93-a7cc-1b6cf24a7f2e.png",
+      "output": "06-comparison.png"
+    },
+    {
+      "id": "07",
+      "title": "어떤 사람이 알뜰폰이 잘 맞을까요",
+      "file": "exec-ef480068-6c4a-402b-aaab-482cb2281a4a.png",
+      "output": "07-mvno-use-cases.png"
+    },
+    {
+      "id": "08",
+      "title": "어떤 사람이 선불폰이 잘 맞을까요",
+      "file": "exec-0e73bda8-2109-476f-ad77-4c96e35e7d7d.png",
+      "output": "08-prepaid-use-cases.png"
+    },
+    {
+      "id": "09",
+      "title": "자급제폰 사용할 때 주의사항",
+      "file": "exec-ae36d6de-7c18-4a44-a24b-69c9bb0948d2.png",
+      "output": "09-checklist.png"
+    },
+    {
+      "id": "10",
+      "title": "자급제폰 개통방법 총정리",
+      "file": "exec-bca3861e-8861-4768-b567-af693a4fac73.png",
+      "output": "10-summary.png"
+    }
+  ]
+}
+

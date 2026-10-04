@@ -1,0 +1,79 @@
+{
+  "count": 12,
+  "generatedDirectory": "C:/Users/user/.codex/generated_images/01a01eb3-bf29-7b21-8748-21a00c03fe24",
+  "images": [
+    {
+      "id": "00",
+      "file": "exec-765941fd-369e-4fe5-8704-9edd59ecdaf7.png",
+      "title": "썸네일",
+      "output": "00-thumbnail.png"
+    },
+    {
+      "id": "01",
+      "file": "exec-162438d8-efbd-4cc9-9b5f-9a63965d8828.png",
+      "title": "IMEI란 무엇일까요",
+      "output": "01-imei-definition.png"
+    },
+    {
+      "id": "02",
+      "file": "exec-0e2228c9-746b-4b81-9879-09e63c83d9ad.png",
+      "title": "가장 빠른 IMEI 조회",
+      "output": "02-quick-dial.png"
+    },
+    {
+      "id": "03",
+      "file": "exec-9a0f3990-317b-48ea-8531-62cb0626774d.png",
+      "title": "아이폰에서 IMEI 조회하는 방법",
+      "output": "03-iphone.png"
+    },
+    {
+      "id": "04",
+      "file": "exec-961f6df5-736a-4e91-a9f3-f6e2507ce22e.png",
+      "title": "갤럭시에서 IMEI 조회하는 방법",
+      "output": "04-galaxy.png"
+    },
+    {
+      "id": "05",
+      "file": "exec-8529307f-4de8-4b27-ab7f-325d127b2859.png",
+      "title": "제품 박스에서도 확인 가능합니다",
+      "output": "05-product-box.png"
+    },
+    {
+      "id": "06",
+      "file": "exec-38fcae89-443d-4089-960f-4eeb0712704a.png",
+      "title": "IMEI 조회가 필요한 경우",
+      "output": "06-use-cases.png"
+    },
+    {
+      "id": "07",
+      "file": "exec-b02d6894-e57f-471f-912e-91a9c56680fe.png",
+      "title": "IMEI를 다른 사람에게 알려줘도 될까요",
+      "output": "07-safe-sharing.png"
+    },
+    {
+      "id": "08",
+      "file": "exec-2708403e-1662-4b05-9c1f-e690f4573f11.png",
+      "title": "IMEI와 시리얼번호는 무엇이 다를까요",
+      "output": "08-imei-vs-serial.png"
+    },
+    {
+      "id": "09",
+      "file": "exec-a1b0f8aa-b3ba-4b0c-abf1-e00502495cf6.png",
+      "title": "듀얼심 스마트폰은 왜 IMEI가 두 개일까요",
+      "output": "09-dual-sim.png"
+    },
+    {
+      "id": "10",
+      "file": "exec-fed47ece-2d27-455a-9b92-99bdf7f1610e.png",
+      "title": "IMEI 조회가 안 되는 경우",
+      "output": "10-troubleshooting.png"
+    },
+    {
+      "id": "11",
+      "file": "exec-2faabf8c-c8c1-423a-959b-0e266da641e7.png",
+      "title": "IMEI 조회 방법 총정리",
+      "output": "11-summary.png"
+    }
+  ]
+}
+
