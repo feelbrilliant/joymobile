@@ -27,7 +27,9 @@
 - 글 작성은 기본적으로 Claude Code CLI(`claude -p`, 사용자의 구독)로 한다. `--engine api` 일 때만 Claude API 사용
 - 테스트: `cd blog && python -m unittest discover -s tests -t .`
 - 실행 확인(API 호출 없음): `cd blog && python run.py --id 24 --from-file <초안.txt> --no-open`
-- 코드는 `blog/joyblog/` (topics → prompt → generate → post → check → render), 진입점은 `blog/run.py`
+- 코드는 `blog/joyblog/` (topics → prompt → generate → post → check → render → editor), 진입점은 `blog/run.py`
+- 스마트에디터 입력은 `blog/joyblog/editor.py` (Playwright, 사용자 PC의 Chrome/Edge 전용 프로필). 화면 선택자는 `blog/config/editor.json` 에만 둔다
+- 에디터 테스트는 `blog/tests/fixtures` 의 가짜 에디터로 돈다. 실제 네이버 화면은 클라우드에서 접속할 수 없으므로 사용자 PC에서 확인한다
 - 글 작성 규칙은 `blog/prompts/system.md` 가 기준입니다. 규칙을 바꿀 때 이 파일을 고칩니다
 - 요금제 가격·제공량은 `blog/data/plans.json` 에만 둡니다. 프롬프트나 코드에 숫자를 직접 적지 말 것
 - `blog/data/topics.csv` 의 `제목` 은 발행 제목 그대로 쓰입니다. 생성된 글에서 제목을 바꾸지 말 것

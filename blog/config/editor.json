@@ -1,0 +1,29 @@
+{
+  "description": "네이버 스마트에디터 화면 요소 위치. 네이버가 화면을 바꿔 입력이 실패하면 이 파일만 고친다. 각 항목은 위에서부터 차례로 시도한다.",
+  "blog_id": "",
+  "browser": "chrome",
+  "write_url": "https://blog.naver.com/{blog_id}?Redirect=Write&",
+  "write_url_without_id": "https://blog.naver.com/GoBlogWrite.naver",
+  "login_url_marker": "nid.naver.com",
+  "editor_frame": ["iframe#mainFrame"],
+  "ready": [".se-documentTitle", ".se-content"],
+  "dismiss": [
+    ".se-popup-alert-confirm .se-popup-button-cancel",
+    ".se-popup-alert .se-popup-button-cancel",
+    ".se-help-panel-close-button"
+  ],
+  "title": [
+    ".se-documentTitle .se-text-paragraph",
+    ".se-title-text .se-text-paragraph",
+    ".se-title-text"
+  ],
+  "body": [
+    ".se-component.se-text .se-text-paragraph",
+    ".se-content .se-module-text .se-text-paragraph"
+  ],
+  "save": [
+    "button[class*='save_btn']",
+    "button:has-text('저장')"
+  ],
+  "forbidden_words": ["발행", "publish"]
+}
