@@ -1,0 +1,75 @@
+{
+  "updated_at": "2026-10-05",
+  "source": "조이모바일 운영자 제공",
+  "carrier": "KT",
+  "product": "선불폰/선불유심",
+  "plans": [
+    {
+      "id": "basic1",
+      "name": "기본1",
+      "monthly_fee_krw": 12100,
+      "voice": "50분",
+      "sms": "30건",
+      "data": "300MB",
+      "after_data_limit": null,
+      "video_extra_call": null,
+      "featured": false
+    },
+    {
+      "id": "lite300mb",
+      "name": "300MB 라이트",
+      "monthly_fee_krw": 33000,
+      "voice": "기본제공",
+      "sms": "기본제공",
+      "data": "300MB",
+      "after_data_limit": "최대 1Mbps",
+      "video_extra_call": "30분",
+      "featured": false
+    },
+    {
+      "id": "prepaid396",
+      "name": "선불396",
+      "monthly_fee_krw": 39600,
+      "voice": "기본제공",
+      "sms": "기본제공",
+      "data": "10.3GB",
+      "after_data_limit": "최대 3Mbps",
+      "video_extra_call": "30분",
+      "featured": true,
+      "note": "주력 요금제. 카카오톡, 웹서핑, 내비게이션, 영상 시청 등 일상 용도에 두루 맞음"
+    },
+    {
+      "id": "prepaid459",
+      "name": "선불459",
+      "monthly_fee_krw": 45900,
+      "voice": "기본제공",
+      "sms": "기본제공",
+      "data": "20.3GB",
+      "after_data_limit": "최대 3Mbps",
+      "video_extra_call": "30분",
+      "featured": false
+    },
+    {
+      "id": "select770",
+      "name": "선택770",
+      "monthly_fee_krw": 77000,
+      "voice": "기본제공",
+      "sms": "기본제공",
+      "data": "11GB + 매일 2GB",
+      "after_data_limit": "최대 3Mbps",
+      "video_extra_call": "200분",
+      "featured": false
+    },
+    {
+      "id": "video",
+      "name": "비디오",
+      "monthly_fee_krw": 85900,
+      "voice": "기본제공",
+      "sms": "기본제공",
+      "data": "100GB",
+      "after_data_limit": "최대 5Mbps",
+      "video_extra_call": "300분",
+      "featured": false
+    }
+  ]
+}
