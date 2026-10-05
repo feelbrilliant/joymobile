@@ -1,0 +1,35 @@
+{
+  "description": "초안 자동 검수 기준. prompts/system.md 의 규칙 중 프로그램으로 확인할 수 있는 것만 모았다.",
+  "min_chars_without_spaces": 2000,
+  "keyword_count": {
+    "min": 8,
+    "max": 12
+  },
+  "max_same_ending_in_a_row": 2,
+  "banned_cliche_patterns": [
+    "많은 분들이 찾고 있는데요",
+    "많은 분들이 궁금해하시는데요",
+    "오늘은 .{0,30}알아보겠습니다",
+    "이번 포스팅에서는",
+    "끝까지 읽어보시면"
+  ],
+  "banned_ad_phrases": [
+    "무조건",
+    "100%",
+    "최저가",
+    "업계 1위",
+    "가장 저렴",
+    "누구나 가능",
+    "완벽한",
+    "절대 실패하지 않는",
+    "최고의 선택"
+  ],
+  "banned_patterns": {
+    "url": "https?://|www\\.",
+    "phone": "(?<!\\d)0\\d{1,2}[- .]?\\d{3,4}[- .]?\\d{4}(?!\\d)|(?<!\\d)1[5-9]\\d{2}[- ]\\d{4}(?!\\d)",
+    "html_tag": "</?[a-zA-Z][^>]*>",
+    "ai_mention": "AI가 작성|인공지능이 작성|챗GPT|ChatGPT|Claude"
+  },
+  "max_exclamation_marks": 3,
+  "max_emojis": 3
+}

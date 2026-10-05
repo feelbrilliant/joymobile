@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>mock smart editor</title></head>
+<body>
+<!-- 스마트에디터 구조를 흉내 낸 테스트용 페이지. 실제 네이버 화면과 다를 수 있다 -->
+<div class="se-popup-alert-confirm" id="draft-popup">
+  작성 중인 글이 있습니다.
+  <button class="se-popup-button-cancel" type="button" onclick="this.parentElement.remove()">취소</button>
+  <button class="se-popup-button-confirm" type="button">확인</button>
+</div>
+<header>
+  <button class="save_btn__mock" type="button" onclick="document.body.dataset.saved='1'">저장</button>
+  <button class="publish_btn__mock" type="button" onclick="document.body.dataset.published='1'">발행</button>
+</header>
+<div class="se-content">
+  <div class="se-component se-documentTitle">
+    <p class="se-text-paragraph" contenteditable="true" id="title"></p>
+  </div>
+  <div class="se-component se-text">
+    <p class="se-text-paragraph" contenteditable="true" id="body"></p>
+  </div>
+</div>
+<script>
+  // 실제 에디터처럼 paste 이벤트에서 HTML을 꺼내 본문으로 만든다
+  document.addEventListener("paste", (e) => {
+    const html = e.clipboardData && e.clipboardData.getData("text/html");
+    if (!html) return;
+    e.preventDefault();
+    const box = document.createElement("div");
+    box.innerHTML = html;
+    box.querySelectorAll("h3, p, li, td, th").forEach((el) => {
+      const p = document.createElement("p");
+      p.className = "se-text-paragraph";
+      p.textContent = el.textContent;
+      document.querySelector(".se-component.se-text").appendChild(p);
+    });
+  });
+</script>
+</body>
+</html>
