@@ -24,6 +24,7 @@
 ## 블로그 자동화 (`blog/`)
 
 - Python 3.10+, 의존성은 `blog/requirements.txt` (`anthropic`). 사용자는 Windows에서 `blog/run.bat` 으로 실행
+- 글 작성은 기본적으로 Claude Code CLI(`claude -p`, 사용자의 구독)로 한다. `--engine api` 일 때만 Claude API 사용
 - 테스트: `cd blog && python -m unittest discover -s tests -t .`
 - 실행 확인(API 호출 없음): `cd blog && python run.py --id 24 --from-file <초안.txt> --no-open`
 - 코드는 `blog/joyblog/` (topics → prompt → generate → post → check → render), 진입점은 `blog/run.py`

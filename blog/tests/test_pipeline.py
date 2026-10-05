@@ -60,6 +60,16 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(table.rows[0], ["요금제", "월 요금", "데이터"])
         self.assertEqual(len(table.rows), 3)  # 구분 행(---)은 버림
 
+    def test_lists(self):
+        post = parse("제목\n\n이런 경우라면:\n- 첫째 경우\n- 둘째 경우\n\n1. 확인하기\n2. 신청하기\n\n끝 문단입니다.")
+        kinds = [(b.kind, len(b.lines)) for b in post.blocks]
+        self.assertEqual(kinds, [("paragraph", 1), ("ulist", 2), ("olist", 2), ("paragraph", 1)])
+        self.assertIn("<ul><li>첫째 경우</li>", body_html(post))
+        self.assertIn("<ol><li>확인하기</li>", body_html(post))
+
+    def test_divider_is_not_list(self):
+        self.assertEqual([b.kind for b in parse("제목\n\n-----\n\n- 항목").blocks], ["divider", "ulist"])
+
     def test_html(self):
         out = body_html(parse(DRAFT))
         self.assertIn("<h3>사용량별로 나눠 보면</h3>", out)
@@ -108,6 +118,10 @@ class CheckTest(unittest.TestCase):
         self.assertTrue(any("최저가" in e for e in errors))
         self.assertTrue(any("전화번호" in e for e in errors))
         self.assertTrue(any("URL" in e for e in errors))
+
+    def test_list_items_not_counted_as_sentence_endings(self):
+        text = DRAFT + "\n- 기능이 없는 경우\n- 자주 바꾸는 경우\n- 낯선 경우\n- 따로 쓰는 경우\n"
+        self.assertFalse(any("연속" in w for w in self.run_check(text).warnings))
 
     def test_short_body(self):
         rules = dict(RULES, min_chars_without_spaces=2000)

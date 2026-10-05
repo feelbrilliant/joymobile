@@ -22,6 +22,12 @@ class Report:
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     stats: dict = field(default_factory=dict)
+    # 오류는 아니지만 자동 고쳐 쓰기 때 함께 요청할 문제 (키워드 횟수 등 SEO 핵심 규칙)
+    fixable: list[str] = field(default_factory=list)
+
+    @property
+    def revise_items(self) -> list[str]:
+        return self.errors + self.fixable
 
     @property
     def ok(self) -> bool:
@@ -69,7 +75,7 @@ def check_plans(post: Post, plans: dict) -> tuple[list[str], list[str]]:
     # 표는 행 단위로 본다. 한 행에 요금제 이름이 하나면 그 행의 숫자는 그 요금제 것
     lines: list[str] = []
     for b in post.blocks:
-        if b.kind in ("heading", "paragraph"):
+        if b.kind in ("heading", "paragraph", "ulist", "olist"):
             lines.extend(b.lines)
         elif b.kind == "table":
             lines.extend("| " + " | ".join(r) + " |" for r in b.rows)
@@ -137,7 +143,9 @@ def check(post: Post, keyword: str, title: str, plans: dict, rules: dict | None 
     report.stats["키워드_횟수"] = kw
     lo, hi = rules["keyword_count"]["min"], rules["keyword_count"]["max"]
     if not lo <= kw <= hi:
-        report.warnings.append(f"메인 키워드 '{keyword}'가 {kw}회 나옵니다 (권장 {lo}~{hi}회).")
+        msg = f"메인 키워드 '{keyword}'가 {kw}회 나옵니다 (권장 {lo}~{hi}회)."
+        report.warnings.append(msg)
+        report.fixable.append(msg + " 문맥이 자연스러운 범위에서 맞춰 주세요.")
 
     # 구조
     headings = [b for b in post.blocks if b.kind == "heading"]
@@ -172,7 +180,8 @@ def check(post: Post, keyword: str, title: str, plans: dict, rules: dict | None 
         report.warnings.append(f"이모지가 {emojis}개입니다 (최대 {rules['max_emojis']}개).")
     limit = rules["max_same_ending_in_a_row"]
     streak, prev, worst = 0, None, ("", 0)
-    for s in _sentences(body):
+    prose = "\n".join(strip_marks(" ".join(b.lines)) for b in post.blocks if b.kind == "paragraph")
+    for s in _sentences(prose):
         end = _ending(s)
         streak = streak + 1 if end and end == prev else 1
         prev = end

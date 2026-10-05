@@ -18,6 +18,9 @@ def body_html(post: Post) -> str:
             out.append(f"<h3>{_inline(b.lines[0])}</h3>")
         elif b.kind == "paragraph":
             out.append("<p>" + "<br>".join(_inline(line) for line in b.lines) + "</p>")
+        elif b.kind in ("ulist", "olist"):
+            tag = "ul" if b.kind == "ulist" else "ol"
+            out.append(f"<{tag}>" + "".join(f"<li>{_inline(x)}</li>" for x in b.lines) + f"</{tag}>")
         elif b.kind == "divider":
             out.append("<hr>")
         elif b.kind == "table":
@@ -60,6 +63,7 @@ PAGE = """<!doctype html>
   .post h1 {{ font-size:24px; line-height:1.4; margin:0 0 20px; }}
   .post h3 {{ font-size:18px; margin:0; }}
   .post p {{ margin:0; }}
+  .post ul, .post ol {{ margin:0; padding-left:1.4em; }}
   .post hr {{ border:0; border-top:1px solid var(--line); margin:4px 0; }}
   .post table {{ border-collapse:collapse; width:100%; font-size:14px; }}
   .post th, .post td {{ border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }}

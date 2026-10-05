@@ -11,12 +11,15 @@
 
 ## 처음 설치 (Windows, 한 번만)
 
+글은 PC에 설치한 **Claude Code**가 씁니다. 사용 중인 Claude 구독(Pro/Max) 사용량에서 차감되고, 별도 API 요금은 없습니다.
+
 1. [python.org](https://www.python.org/downloads/) 에서 Python 3.10 이상을 설치합니다. 설치 첫 화면에서 **Add python.exe to PATH** 를 체크하세요.
-2. [Claude Console](https://platform.claude.com/) 에서 API 키를 발급받습니다.
-3. 명령 프롬프트(cmd)를 열고 아래를 실행한 뒤, 명령 프롬프트를 닫았다가 다시 엽니다.
+2. Claude Code를 설치합니다. PowerShell을 열고 아래를 실행합니다.
    ```
-   setx ANTHROPIC_API_KEY "발급받은-키"
+   irm https://claude.ai/install.ps1 | iex
    ```
+   설치 방법이 바뀌었을 수 있으니 [Claude Code 설치 안내](https://code.claude.com/docs/en/setup)도 확인하세요.
+3. 명령 프롬프트(cmd)를 새로 열고 `claude` 를 한 번 실행해 구독 계정으로 로그인한 뒤 종료합니다.
 4. 이 `blog` 폴더의 `run.bat` 을 더블클릭합니다. 첫 실행 때 필요한 프로그램이 자동으로 설치됩니다.
 
 ## 사용법
@@ -28,6 +31,8 @@
 | 목록에 없는 키워드·제목으로 만들기 | `run.bat --keyword "유심 eSIM 차이" --title "유심 eSIM 차이, 내 휴대폰에는 어떤 게 맞을까"` |
 | 이미 있는 글을 검수만 하기 (API 호출 없음) | `run.bat --id 12 --from-file 초안.txt` |
 | Claude에 보낼 프롬프트만 확인 | `run.bat --id 12 --dry-run` |
+| 모델 지정 (예: Opus) | `run.bat --model opus` |
+| Claude API로 쓰기 (API 키 필요, 사용량만큼 과금) | `run.bat --engine api` |
 
 실행이 끝나면 미리보기가 브라우저로 열립니다. **제목 복사**, **본문 복사** 버튼으로 스마트에디터에 붙여넣으세요.
 (PHASE 2가 끝나면 이 붙여넣기도 자동으로 됩니다.)
@@ -39,7 +44,8 @@
 | 파일 | 내용 |
 |---|---|
 | `preview.html` | 검수 결과와 글 미리보기, 복사 버튼 |
-| `draft.txt` | Claude가 쓴 원문 |
+| `draft.txt` | Claude가 쓴 최종 원문 |
+| `draft_before_revise.txt` | 자동 수정 전 원문 (수정이 있었을 때만) |
 | `body.html` | 스마트에디터 붙여넣기용 본문 |
 | `post.json` | 구조화된 글과 검수 결과 (PHASE 2 자동 입력에 사용) |
 
@@ -50,11 +56,14 @@
 - **수정 필요** (발행 전 반드시 고칠 것): 제목 변경, 본문 2,000자 미만, 광고 금지 표현, URL·전화번호·HTML, AI 작성 언급, 요금제 가격·데이터·속도 불일치
 - **확인** (읽어 보고 판단): 키워드 횟수 8~12회 벗어남, 상투 표현, 같은 어미 3번 연속, 긴 문단, 느낌표·이모지 과다, 요금제 목록에 없는 금액
 
-수정 필요 항목이 나오면 Claude에게 한 번 자동으로 고쳐 쓰게 합니다. 그래도 남으면 미리보기 맨 위에 빨간색으로 표시됩니다.
+수정 필요 항목이 나오거나 키워드 횟수가 권장 범위를 벗어나면, Claude에게 한 번 자동으로 고쳐 쓰게 합니다.
+그래도 남은 문제는 미리보기 맨 위에 표시됩니다. 고치기 전 원본은 `draft_before_revise.txt` 로 남습니다.
 
-### 비용
+### 비용과 사용량
 
-Claude Opus 5.5를 씁니다. 글 1편에 대략 200~500원 정도로 예상합니다 (자동 수정이 들어가면 더 듭니다). 실제 사용량은 Claude Console에서 확인하세요.
+- **기본 (Claude Code)**: 구독 사용량에서 차감됩니다. 글 1편에 1~2분 정도 걸리고, 자동 수정이 들어가면 요청이 한 번 더 갑니다. 하루 몇 편 수준이면 보통 넉넉하지만, 같은 계정으로 다른 작업을 많이 하는 날에는 사용량 한도에 걸릴 수 있습니다.
+- 모델을 지정하지 않으면 Claude Code 계정의 기본 모델로 씁니다. `--model opus` 처럼 바꿀 수 있습니다. 쓸 수 있는 모델은 구독 요금제에 따라 다릅니다.
+- **`--engine api`**: Claude API(Opus 5.5)를 직접 씁니다. `ANTHROPIC_API_KEY` 환경변수가 필요하고, 1편에 대략 200~500원 정도로 예상합니다.
 
 ## 폴더 구성
 

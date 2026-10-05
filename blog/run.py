@@ -6,6 +6,7 @@
   python run.py --keyword "유심 eSIM 차이" --title "유심 eSIM 차이, 내 휴대폰에는 어떤 게 맞을까"
   python run.py --id 12 --from-file 초안.txt   API 호출 없이 이미 있는 글을 검수·미리보기
   python run.py --id 12 --dry-run     Claude에 보낼 프롬프트만 출력
+  python run.py --engine api          Claude Code 대신 Claude API로 작성 (API 키 필요)
 """
 import argparse
 import json
@@ -34,6 +35,9 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--dry-run", action="store_true", help="프롬프트만 출력하고 끝냄")
     ap.add_argument("--no-revise", action="store_true", help="검수에 걸려도 자동으로 고쳐 쓰지 않음")
     ap.add_argument("--no-open", action="store_true", help="미리보기를 브라우저로 열지 않음")
+    ap.add_argument("--engine", choices=["claude-code", "api"], default="claude-code",
+                    help="claude-code: Claude 구독으로 작성(기본) / api: Claude API로 작성(API 키 필요)")
+    ap.add_argument("--model", help="Claude Code에서 쓸 모델 (예: opus, sonnet). 지정하지 않으면 계정 기본 모델")
     return ap.parse_args()
 
 
@@ -47,7 +51,7 @@ def choose_topic(args, topics):
     return topic_store.pick(topics), True
 
 
-def save_outputs(topic, text, post, report, model) -> Path:
+def save_outputs(topic, text, post, report, model, first=None) -> Path:
     folder = POSTS_DIR / f"{date.today().isoformat()}_{topic.id}"
     n = 2
     while folder.exists():
@@ -55,12 +59,16 @@ def save_outputs(topic, text, post, report, model) -> Path:
         n += 1
     folder.mkdir(parents=True)
     (folder / "draft.txt").write_text(text + "\n", encoding="utf-8")
+    if first:
+        # 자동 수정 전 원본도 남겨 두면 어떤 문제가 있었는지 비교할 수 있다
+        (folder / "draft_before_revise.txt").write_text(first["draft"] + "\n", encoding="utf-8")
     (folder / "body.html").write_text(body_html(post), encoding="utf-8")
     (folder / "preview.html").write_text(preview_page(post, topic, report, model), encoding="utf-8")
     (folder / "post.json").write_text(
         json.dumps(
             {"topic": topic.to_row(), "model": model, "title": post.title,
-             "blocks": [asdict(b) for b in post.blocks], "report": report.to_dict()},
+             "blocks": [asdict(b) for b in post.blocks], "report": report.to_dict(),
+             "errors_before_revise": first["errors"] if first else []},
             ensure_ascii=False, indent=2,
         ),
         encoding="utf-8",
@@ -88,23 +96,27 @@ def main() -> int:
         print("\n===== SYSTEM =====\n" + system + "\n\n===== USER =====\n" + user)
         return 0
 
+    first = None
     if args.from_file:
         text = args.from_file.read_text(encoding="utf-8-sig")
         model = f"(파일: {args.from_file.name})"
         post = parse(text)
         report = check(post, topic.keyword, topic.title, plans)
     else:
-        from joyblog.generate import GenerationError, Writer
+        from joyblog.generate import ApiWriter, ClaudeCodeWriter, GenerationError
 
-        writer = Writer(system)
         try:
+            writer = ApiWriter(system) if args.engine == "api" else ClaudeCodeWriter(system, args.model)
             print("Claude가 초안을 쓰는 중입니다. 1~3분 정도 걸립니다...")
             text = writer.write(user)
             post = parse(text)
             report = check(post, topic.keyword, topic.title, plans)
-            if report.errors and not args.no_revise:
-                print(f"검수에서 {len(report.errors)}개 문제가 나와 한 번 고쳐 씁니다...")
-                text = writer.revise(report.errors)
+            if report.revise_items and not args.no_revise:
+                print(f"검수에서 {len(report.revise_items)}개 문제가 나와 한 번 고쳐 씁니다...")
+                for x in report.revise_items:
+                    print(f"  - {x}")
+                first = {"draft": text, "errors": report.revise_items}
+                text = writer.revise(report.revise_items)
                 post = parse(text)
                 report = check(post, topic.keyword, topic.title, plans)
         except GenerationError as e:
@@ -112,7 +124,7 @@ def main() -> int:
             return 1
         model = writer.model_used
 
-    folder = save_outputs(topic, text, post, report, model)
+    folder = save_outputs(topic, text, post, report, model, first)
     if from_csv and not args.from_file:
         topic_store.mark(topics, topic, topic_store.DRAFTED)
         topic_store.save(topics)
