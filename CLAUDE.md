@@ -23,6 +23,10 @@
 
 ## 블로그 자동화 (`blog/`)
 
+- Python 3.10+, 의존성은 `blog/requirements.txt` (`anthropic`). 사용자는 Windows에서 `blog/run.bat` 으로 실행
+- 테스트: `cd blog && python -m unittest discover -s tests -t .`
+- 실행 확인(API 호출 없음): `cd blog && python run.py --id 24 --from-file <초안.txt> --no-open`
+- 코드는 `blog/joyblog/` (topics → prompt → generate → post → check → render), 진입점은 `blog/run.py`
 - 글 작성 규칙은 `blog/prompts/system.md` 가 기준입니다. 규칙을 바꿀 때 이 파일을 고칩니다
 - 요금제 가격·제공량은 `blog/data/plans.json` 에만 둡니다. 프롬프트나 코드에 숫자를 직접 적지 말 것
 - `blog/data/topics.csv` 의 `제목` 은 발행 제목 그대로 쓰입니다. 생성된 글에서 제목을 바꾸지 말 것
